@@ -18,6 +18,7 @@ HPDS,KUAS JAVA訓練課程成果與GitHub使用
 - [ ] 字型設定
 - [ ] 狀態列
 - [ ] 說明資訊
+- [ ] 問題回報
 
 以上....
 JAVA-Training-Homework/Java_Training_Final/src/Final_Work.java
