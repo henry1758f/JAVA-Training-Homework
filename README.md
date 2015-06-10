@@ -20,4 +20,5 @@ HPDS,KUAS JAVA訓練課程成果與GitHub使用
 - [ ] 說明資訊
 
 以上....
+JAVA-Training-Homework/Java_Training_Final/src/Final_Work.java
 
