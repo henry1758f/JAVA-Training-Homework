@@ -11,90 +11,115 @@ import java.awt.event.KeyEvent;
  */
 public class Final_Work  extends JFrame implements ActionListener
 {
-	public static int W_width = 700;
-	public static int W_height = 700;
+	public static int W_width = 700;	//è¦–çª—å¯¬
+	public static int W_height = 700;	//è¦–çª—é«˜
 	public Final_Work() 
 	{
-		super ("°O¨Æ¥»");
-		/*¤W¤è¤U©Ô¦¡¿ï³æJMenuBar*/
+		super ("è¨˜äº‹æœ¬");
+
+		/*ä¸Šæ–¹ä¸‹æ‹‰å¼é¸å–®JMenuBar*/
 		JMenuBar upon = new JMenuBar();
 		setJMenuBar(upon);
-		//ÀÉ®×
-		JMenu file = new JMenu("ÀÉ®×(F) ");
+		//æª”æ¡ˆ
+		JMenu file = new JMenu("æª”æ¡ˆ(F) ");
 		file.setMnemonic(KeyEvent.VK_F);
 		JMenuItem item;
-		file.add(item = new JMenuItem("¶}·sÀÉ®×(N)",KeyEvent.VK_N));
+		file.add(item = new JMenuItem("é–‹æ–°æª”æ¡ˆ(N)",KeyEvent.VK_N));
 		item.addActionListener(this);
-		file.add(item = new JMenuItem("¶}±ÒÂÂÀÉ(O)",KeyEvent.VK_O));
+		file.add(item = new JMenuItem("é–‹å•ŸèˆŠæª”(O)",KeyEvent.VK_O));
 		item.addActionListener(this);
-		file.add(item = new JMenuItem("Àx¦sÀÉ®×(S)",KeyEvent.VK_S));
+		file.add(item = new JMenuItem("å„²å­˜æª”æ¡ˆ(S)",KeyEvent.VK_S));
 		item.addActionListener(this);
-		file.add(item = new JMenuItem("¥t¦s·sÀÉ(A)",KeyEvent.VK_A));
-		item.addActionListener(this);
-		file.addSeparator();
-		file.add(item = new JMenuItem("ª©­±³]©w(U)",KeyEvent.VK_U));
-		item.addActionListener(this);
-		file.add(item = new JMenuItem("¦C¦L(P)",KeyEvent.VK_P));
+		file.add(item = new JMenuItem("å¦å­˜æ–°æª”(A)",KeyEvent.VK_A));
 		item.addActionListener(this);
 		file.addSeparator();
-		file.add(item = new JMenuItem("µ²§ô(X)",KeyEvent.VK_X));
+		file.add(item = new JMenuItem("ç‰ˆé¢è¨­å®š(U)",KeyEvent.VK_U));
+		item.addActionListener(this);
+		file.add(item = new JMenuItem("åˆ—å°(P)",KeyEvent.VK_P));
+		item.addActionListener(this);
+		file.addSeparator();
+		file.add(item = new JMenuItem("çµæŸ(X)",KeyEvent.VK_X));
 		item.addActionListener(this);
 		upon.add(file);
-		//½s¿è
-		JMenu edit = new JMenu("½s¿è(E) ");
+		//ç·¨è¼¯
+		JMenu edit = new JMenu("ç·¨è¼¯(E) ");
 		edit.setMnemonic(KeyEvent.VK_E);
-		edit.add(item = new JMenuItem("´_­ì(Z)",KeyEvent.VK_Z));
+		edit.add(item = new JMenuItem("å¾©åŸ(Z)",KeyEvent.VK_Z));
 		item.addActionListener(this);
 		edit.addSeparator();
-		edit.add(item = new JMenuItem("°Å¤U(T)",KeyEvent.VK_T));
+		edit.add(item = new JMenuItem("å‰ªä¸‹(T)",KeyEvent.VK_T));
 		item.addActionListener(this);
-		edit.add(item = new JMenuItem("½Æ»s(C)",KeyEvent.VK_C));
+		edit.add(item = new JMenuItem("è¤‡è£½(C)",KeyEvent.VK_C));
 		item.addActionListener(this);
-		edit.add(item = new JMenuItem("¶K¤W(P)",KeyEvent.VK_P));
+		edit.add(item = new JMenuItem("è²¼ä¸Š(P)",KeyEvent.VK_P));
 		item.addActionListener(this);
-		edit.add(item = new JMenuItem("§R°£(L)",KeyEvent.VK_L));
-		item.addActionListener(this);
-		edit.addSeparator();
-		edit.add(item = new JMenuItem("´M§ä(F)",KeyEvent.VK_F));
-		item.addActionListener(this);
-		edit.add(item = new JMenuItem("§ä¤U¤@­Ó(N)",KeyEvent.VK_N));
-		item.addActionListener(this);
-		edit.add(item = new JMenuItem("¨ú¥N(R)",KeyEvent.VK_R));
+		edit.add(item = new JMenuItem("åˆªé™¤(L)",KeyEvent.VK_L));
 		item.addActionListener(this);
 		edit.addSeparator();
-		edit.add(item = new JMenuItem("¥ş¿ï(A)",KeyEvent.VK_A));
+		edit.add(item = new JMenuItem("å°‹æ‰¾(F)",KeyEvent.VK_F));
 		item.addActionListener(this);
-		edit.add(item = new JMenuItem("®É¶¡/¤é´Á(D)",KeyEvent.VK_D));
+		edit.add(item = new JMenuItem("æ‰¾ä¸‹ä¸€å€‹(N)",KeyEvent.VK_N));
+		item.addActionListener(this);
+		edit.add(item = new JMenuItem("å–ä»£(R)",KeyEvent.VK_R));
+		item.addActionListener(this);
+		edit.addSeparator();
+		edit.add(item = new JMenuItem("å…¨é¸(A)",KeyEvent.VK_A));
+		item.addActionListener(this);
+		edit.add(item = new JMenuItem("æ™‚é–“/æ—¥æœŸ(D)",KeyEvent.VK_D));
 		item.addActionListener(this);
 		upon.add(edit);
-		//®æ¦¡
-		JMenu form = new JMenu("®æ¦¡(O) ");
+		//æ ¼å¼
+		JMenu form = new JMenu("æ ¼å¼(O) ");
 		edit.setMnemonic(KeyEvent.VK_O);
 		JCheckBoxMenuItem autowrap;
-		autowrap = new JCheckBoxMenuItem("¦Û°Ê´«¦æ");
+		autowrap = new JCheckBoxMenuItem("è‡ªå‹•æ›è¡Œ");
 		autowrap.addActionListener(this);
 		form.add(autowrap);
 		
-		form.add(item = new JMenuItem("¦r«¬(F)",KeyEvent.VK_F));
+		form.add(item = new JMenuItem("å­—å‹(F)",KeyEvent.VK_F));
 		item.addActionListener(this);
 		upon.add(form);
-		//ÀËµø
-		JMenu view  = new JMenu("ÀËµø(V) ");
+		//æª¢è¦–
+		JMenu view  = new JMenu("æª¢è¦–(V) ");
 		view.setMnemonic(KeyEvent.VK_V);
 		JCheckBoxMenuItem statusBar;
-		statusBar = new JCheckBoxMenuItem("ª¬ºAÄæ");
+		statusBar = new JCheckBoxMenuItem("ç‹€æ…‹æ¬„");
 		statusBar.addActionListener(this);
 		view.add(statusBar);
 		upon.add(view);
-		//»¡©ú
-		JMenu help = new JMenu("»¡©ú(H) ");
+		//èªªæ˜
+		JMenu help = new JMenu("èªªæ˜(H) ");
 		help.setMnemonic(KeyEvent.VK_E);
-		help.add(item = new JMenuItem("°İÃD¦^³ø(R)",KeyEvent.VK_R));
+		help.add(item = new JMenuItem("å•é¡Œå›å ±(R)",KeyEvent.VK_R));
 		item.addActionListener(this);
 		help.addSeparator();
-		help.add(item = new JMenuItem("Ãö©ó(A)",KeyEvent.VK_A));
+		help.add(item = new JMenuItem("é—œæ–¼(A)",KeyEvent.VK_A));
 		item.addActionListener(this);
 		upon.add(help);
+		 /*è¼¸å…¥æ–‡å­—å€*/
+		JTextArea textArea = new JTextArea(); 
+	    textArea.setFont(new Font("ç´°æ˜é«”", Font.PLAIN, 16)); //è¨­å®šå­—é«”åŠå¤§å°
+	    textArea.setForeground(Color.black);//è¨­å®šæ–‡å­—é¡è‰²
+	    textArea.setBackground(Color.white);//è¨­å®šèƒŒæ™¯é¡è‰²
+	    textArea.setLineWrap(true);
+	      
+	
+	    JScrollPane panel = new JScrollPane(textArea,      
+	    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, //è¨­ç½®å‚ç›´æ»¾å‹•æ¢ç­–ç•¥ä»¥ä½¿å‚ç›´æ»¾å‹•æ¢éœ€è¦æ™‚é¡¯ç¤ºã€‚
+	    //ScrollPaneConstants. VERTICAL_SCROLLBAR_ALWAYS,  //è¨­ç½®å‚ç›´æ»¾å‹•æ¢ç­–ç•¥ä»¥ä½¿å‚ç›´æ»¾å‹•æ¢ä¸€ç›´é¡¯ç¤ºã€‚
+	    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //è¨­ç½®æ°´å¹³æ»¾å‹•æ¢ç­–ç•¥ä»¥ä½¿æ°´å¹³æ»¾å‹•æ¢ä¸é¡¯ç¤ºã€‚
+
+	      
+	    Container contentPane = getContentPane(); 
+	    contentPane.add(panel, BorderLayout.CENTER); 
+	      
+	    /*ç‹€æ…‹åˆ—*/
+	    JLabel stateBar = new JLabel("æœªä¿®æ”¹"); 
+	    stateBar.setHorizontalAlignment(SwingConstants.LEFT); //è¨­å®šæ°´å¹³æ–¹å‘çš„å°é½Š
+	    stateBar.setBorder( 
+	    BorderFactory.createEtchedBorder()); 
+	    contentPane.add(stateBar, BorderLayout.SOUTH);
+		
 
 	}
 
