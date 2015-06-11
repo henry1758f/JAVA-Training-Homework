@@ -1,16 +1,17 @@
-
+package Final_Work;
 import javax.swing.*;
 
+import com.sun.glass.events.WindowEvent;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-/**
- * @author henry1758f , Lilyo .
- *
- */
+import java.awt.event.*;
+import java.io.File;
+
+
 public class Final_Work  extends JFrame implements ActionListener
 {
+	
+	private static final String Users = null;
 	public static int W_width = 700;	//視窗寬
 	public static int W_height = 700;	//視窗高
 	public Final_Work() 
@@ -27,9 +28,22 @@ public class Final_Work  extends JFrame implements ActionListener
 		file.add(item = new JMenuItem("開新檔案(N)",KeyEvent.VK_N));
 		item.addActionListener(this);
 		file.add(item = new JMenuItem("開啟舊檔(O)",KeyEvent.VK_O));
-		item.addActionListener(this);
+		item.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseReleased(MouseEvent ev)
+            {
+                //csopenFile();
+                fgopenFile();
+            }
+		});
 		file.add(item = new JMenuItem("儲存檔案(S)",KeyEvent.VK_S));
-		item.addActionListener(this);
+		item.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseReleased(MouseEvent ev)
+            {
+				fgsaveFile();
+            }
+		});
 		file.add(item = new JMenuItem("另存新檔(A)",KeyEvent.VK_A));
 		item.addActionListener(this);
 		file.addSeparator();
@@ -39,7 +53,10 @@ public class Final_Work  extends JFrame implements ActionListener
 		item.addActionListener(this);
 		file.addSeparator();
 		file.add(item = new JMenuItem("結束(X)",KeyEvent.VK_X));
-		item.addActionListener(this);
+		item.addActionListener(new ActionListener() {              //右上角關閉事件
+					public void actionPerformed(ActionEvent e) { 
+					closeFile(); 	
+					}});
 		upon.add(file);
 		//編輯
 		JMenu edit = new JMenu("編輯(E) ");
@@ -119,26 +136,72 @@ public class Final_Work  extends JFrame implements ActionListener
 	    stateBar.setBorder( 
 	    BorderFactory.createEtchedBorder()); 
 	    contentPane.add(stateBar, BorderLayout.SOUTH);
-		
 
 	}
 
-	/**
-	 * @param args
-	 */
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Final_Work mainWin = new Final_Work();
-		mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		//mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		mainWin.addWindowListener(                           //右上角關閉事件
+				new WindowAdapter() { 
+				public void windowClosing(WindowEvent e) { 
+				closeFile(); 
+				}}); 	
+		
 		mainWin.setSize(W_width, W_height);
 		mainWin.setVisible(true);
 
 	}
 
+	/*關閉檔案*/
+	private static void closeFile() {
+		// TODO Auto-generated method stub
+		 System.exit(0);
+	}
+
+	/*chooser方法開檔*/
+	private static void csopenFile() {
+		// TODO Auto-generated method stub
+		JFileChooser chooser = new JFileChooser();
+		int confirm = chooser.showOpenDialog(null);
+		if (confirm == chooser.APPROVE_OPTION){
+    	//JOptionPane.showMessageDialog(null, "Your file: " + chooser.getSelectedFile() + "\n,in " + chooser.getCurrentDirectory() + ".", "Message", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	/*filedialog方法開檔*/
+	private static void fgopenFile() {
+		// TODO Auto-generated method stub
+		String Filename;  
+		Frame frame = new Frame();
+		FileDialog fd = new FileDialog( frame,"開啟檔案", FileDialog.LOAD);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
+	    fd.setVisible(true); 
+	    fd.setDirectory("Usernull");
+	    if(fd!=null){   
+	        Filename=fd.getDirectory() +fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
+	        System.out.println("FileDialog---->"+Filename);  //顯示選擇的檔案路徑+名稱
+	    }
+	}
+	/*filedialog方法儲存檔案*/
+	private static void fgsaveFile() {
+		// TODO Auto-generated method stub
+		String Filename;  
+		Frame frame = new Frame();
+		FileDialog fd = new FileDialog( frame,"儲存檔案", FileDialog.SAVE);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
+	    fd.setVisible(true); 
+	    fd.setDirectory("Usernull");
+	    if(fd!=null){   
+	        Filename=fd.getDirectory() +fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
+	        System.out.println("FileDialog---->"+Filename);  //顯示選擇的檔案路徑+名稱
+	    }
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
-	}
+	} 
 
+	
 }
