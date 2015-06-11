@@ -1,10 +1,14 @@
-
+package Final_Work;
 import javax.swing.*;
+
+import com.sun.glass.events.WindowEvent;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;//鍵盤事件
+import java.awt.event.WindowAdapter;
 /**
  * @author henry1758f , Lilyo .
  *
@@ -39,7 +43,12 @@ public class Final_Work  extends JFrame implements ActionListener
 		item.addActionListener(this);
 		file.addSeparator();
 		file.add(item = new JMenuItem("結束(X)",KeyEvent.VK_X));
-		item.addActionListener(this);
+		item.addActionListener(new ActionListener() {              //右上角關閉事件
+					public void actionPerformed(ActionEvent e) { 
+					closeFile(); 	
+					}
+					} 
+					);
 		upon.add(file);
 		//編輯
 		JMenu edit = new JMenu("編輯(E) ");
@@ -130,15 +139,23 @@ public class Final_Work  extends JFrame implements ActionListener
 		// TODO Auto-generated method stub
 		Final_Work mainWin = new Final_Work();
 		mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		mainWin.addWindowListener(                           //右上角關閉事件
+				new WindowAdapter() { 
+				public void windowClosing(WindowEvent e) { 
+				closeFile(); 
+				} 
+				} 
+				); 	
 		mainWin.setSize(W_width, W_height);
 		mainWin.setVisible(true);
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	
+	private static void closeFile() {
 		// TODO Auto-generated method stub
-		
-	}
+		 System.exit(0);
+	} 
+
 
 }
