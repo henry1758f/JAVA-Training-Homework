@@ -2,16 +2,26 @@ package Final_Work;
 import javax.swing.*;
 
 import com.sun.glass.events.WindowEvent;
+import com.sun.javafx.binding.SelectBinding.AsString;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 public class Final_Work  extends JFrame implements ActionListener
 {
 	
-	private static final String Users = null;
+	private static String Users;
+	private static AsString Output [];
+	public static String str= new String();
+	public static char opench;
+	public static JTextArea textArea;
+	public static String Filename;
 	public static int W_width = 700;	//視窗寬
 	public static int W_height = 700;	//視窗高
 	public Final_Work() 
@@ -41,7 +51,11 @@ public class Final_Work  extends JFrame implements ActionListener
 			@Override
             public void mouseReleased(MouseEvent ev)
             {
-				fgsaveFile();
+				try {
+					fgsaveFile();
+					} 
+				catch (IOException e) {e.printStackTrace();
+			}
             }
 		});
 		file.add(item = new JMenuItem("另存新檔(A)",KeyEvent.VK_A));
@@ -65,11 +79,33 @@ public class Final_Work  extends JFrame implements ActionListener
 		item.addActionListener(this);
 		edit.addSeparator();
 		edit.add(item = new JMenuItem("剪下(T)",KeyEvent.VK_T));
-		item.addActionListener(this);
+		item.addActionListener(new ActionListener(
+				) {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+			//	cut();
+			}
+		});
 		edit.add(item = new JMenuItem("複製(C)",KeyEvent.VK_C));
-		item.addActionListener(this);
+		item.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+			//	copy();
+			}
+		});
 		edit.add(item = new JMenuItem("貼上(P)",KeyEvent.VK_P));
-		item.addActionListener(this);
+		item.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+			//	paste();
+			}
+		});
 		edit.add(item = new JMenuItem("刪除(L)",KeyEvent.VK_L));
 		item.addActionListener(this);
 		edit.addSeparator();
@@ -111,22 +147,51 @@ public class Final_Work  extends JFrame implements ActionListener
 		item.addActionListener(this);
 		help.addSeparator();
 		help.add(item = new JMenuItem("關於(A)",KeyEvent.VK_A));
-		item.addActionListener(this);
+		item.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JOptionPane.showOptionDialog(null, 
+						"程式名稱: 簡易型筆記本 \n" + 
+						"程式設計者: 吳侑峰  黃宣錡  羅永暉  \n" + 
+						"簡介: 簡單的文字編輯器\n" , 
+						"關於簡易型筆記本",              //title
+						JOptionPane.DEFAULT_OPTION,     
+						JOptionPane.INFORMATION_MESSAGE,  //警示圖示
+						null, null, null); 
+				
+			}
+		});
 		upon.add(help);
 		 /*輸入文字區*/
-		JTextArea textArea = new JTextArea(); 
+		textArea = new JTextArea(); 
 	    textArea.setFont(new Font("細明體", Font.PLAIN, 16)); //設定字體及大小
 	    textArea.setForeground(Color.black);//設定文字顏色
 	    textArea.setBackground(Color.white);//設定背景顏色
-	    textArea.setLineWrap(true);
-	      
-	
+	    textArea.setLineWrap(true);//設定自動換行 
 	    JScrollPane panel = new JScrollPane(textArea,      
 	    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, //設置垂直滾動條策略以使垂直滾動條需要時顯示。
 	    //ScrollPaneConstants. VERTICAL_SCROLLBAR_ALWAYS,  //設置垂直滾動條策略以使垂直滾動條一直顯示。
 	    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //設置水平滾動條策略以使水平滾動條不顯示。
-
-	      
+	     
+	    	
+	    
+/*
+	    textArea.addMouseListener( 
+	    		new MouseAdapter() { 
+	    		public void mouseReleased(MouseEvent e) { 
+				JPopupMenu popUpMenu = editMenu.getPopupMenu();
+	    		if(e.getButton() == MouseEvent.BUTTON3) //表示滑鼠右鍵
+	    		{popUpMenu.show(editMenu, e.getX(), e.getY());}
+	    		} 
+	    		
+	    		public void mouseClicked(MouseEvent e) { 
+				if(e.getButton() == MouseEvent.BUTTON1) //表示滑鼠左鍵
+				{popUpMenu.setVisible(false); }
+	    		} }
+	    		);*/
+	    		
 	    Container contentPane = getContentPane(); 
 	    contentPane.add(panel, BorderLayout.CENTER); 
 	      
@@ -140,7 +205,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Final_Work mainWin = new Final_Work();
 		//mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -152,7 +217,8 @@ public class Final_Work  extends JFrame implements ActionListener
 		
 		mainWin.setSize(W_width, W_height);
 		mainWin.setVisible(true);
-
+		
+		
 	}
 
 	/*關閉檔案*/
@@ -177,25 +243,47 @@ public class Final_Work  extends JFrame implements ActionListener
 		Frame frame = new Frame();
 		FileDialog fd = new FileDialog( frame,"開啟檔案", FileDialog.LOAD);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
 	    fd.setVisible(true); 
-	    fd.setDirectory("Usernull");
 	    if(fd!=null){   
 	        Filename=fd.getDirectory() +fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
 	        System.out.println("FileDialog---->"+Filename);  //顯示選擇的檔案路徑+名稱
-	    }
+	        
+	        try {
+	            FileReader fr=new FileReader(Filename); 
+	            BufferedReader br=new BufferedReader(fr);
+	            int ch;
+	            while ((ch=br.read()) != -1) {          //BufferedReader 繼承自 Reader 類別的 read() 方法來讀取, 但此方法是一次讀取一個字元, 讀到檔尾時會傳回 -1
+	              opench=(char)ch;                     //opench=將ch強制轉成字元
+	              System.out.print(opench);              
+	               str=str+String.valueOf(opench);   //字串=字串+強制轉字串後的opench
+	              }
+	             textArea.setText(str);           //最後顯示於TextArea
+	            }
+	          catch (IOException e) {System.out.println(e);  //捕捉異常並顯示"e"
+	    	
+	    }}
 	}
-	/*filedialog方法儲存檔案*/
-	private static void fgsaveFile() {
+	private static AsString AnsiString(Object object) {
 		// TODO Auto-generated method stub
-		String Filename;  
+		return null;
+	}
+
+
+	/*filedialog方法儲存檔案*/
+	private static void fgsaveFile() throws IOException {
+		// TODO Auto-generated method stub
+		 
 		Frame frame = new Frame();
 		FileDialog fd = new FileDialog( frame,"儲存檔案", FileDialog.SAVE);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
 	    fd.setVisible(true); 
-	    fd.setDirectory("Usernull");
+	    fd.setDirectory("Usernull");//設定路徑
 	    if(fd!=null){   
-	        Filename=fd.getDirectory() +fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
+	        Filename=fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
 	        System.out.println("FileDialog---->"+Filename);  //顯示選擇的檔案路徑+名稱
-	    }
-	}
+	        
+	       }
+	          }
+	    
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
