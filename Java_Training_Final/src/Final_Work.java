@@ -1,3 +1,4 @@
+/*文件編碼請選擇UTF-8*/
 package Final_Work;
 import javax.swing.*;
 
@@ -7,16 +8,19 @@ import com.sun.javafx.binding.SelectBinding.AsString;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 
 public class Final_Work  extends JFrame implements ActionListener
 {
 	
-	private static String Users;
 	private static AsString Output [];
 	public static String str= new String();
 	public static char opench;
@@ -34,18 +38,28 @@ public class Final_Work  extends JFrame implements ActionListener
 		//檔案
 		JMenu file = new JMenu("檔案(F) ");
 		file.setMnemonic(KeyEvent.VK_F);
-		JMenuItem item;
-		file.add(item = new JMenuItem("開新檔案(N)",KeyEvent.VK_N));
-		item.addActionListener(this);
-		file.add(item = new JMenuItem("開啟舊檔(O)",KeyEvent.VK_O));
-		item.addMouseListener(new MouseAdapter() {
+		JMenuItem open;
+		file.add(open= new JMenuItem("開新檔案(N)"));
+		open.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+		open.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseReleased(MouseEvent ev)
             {
-                //csopenFile();
+                textArea.setText("");  //清除
+            }
+			 
+		});
+		JMenuItem open1;
+		file.add(open1 = new JMenuItem("開啟舊檔(O)"));
+		open1.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_O,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+		open1.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseReleased(MouseEvent ev)
+            {
                 fgopenFile();
             }
 		});
+		JMenuItem item;
 		file.add(item = new JMenuItem("儲存檔案(S)",KeyEvent.VK_S));
 		item.addMouseListener(new MouseAdapter() {
 			@Override
@@ -123,7 +137,7 @@ public class Final_Work  extends JFrame implements ActionListener
 		upon.add(edit);
 		//格式
 		JMenu form = new JMenu("格式(O) ");
-		edit.setMnemonic(KeyEvent.VK_O);
+		form.setMnemonic(KeyEvent.VK_O);
 		JCheckBoxMenuItem autowrap;
 		autowrap = new JCheckBoxMenuItem("自動換行");
 		autowrap.addActionListener(this);
@@ -142,7 +156,7 @@ public class Final_Work  extends JFrame implements ActionListener
 		upon.add(view);
 		//說明
 		JMenu help = new JMenu("說明(H) ");
-		help.setMnemonic(KeyEvent.VK_E);
+		help.setMnemonic(KeyEvent.VK_H);
 		help.add(item = new JMenuItem("問題回報(R)",KeyEvent.VK_R));
 		item.addActionListener(this);
 		help.addSeparator();
@@ -170,6 +184,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	    textArea.setForeground(Color.black);//設定文字顏色
 	    textArea.setBackground(Color.white);//設定背景顏色
 	    textArea.setLineWrap(true);//設定自動換行 
+		textArea.setEditable(true);//將textArea設為可編輯(預設)
 	    JScrollPane panel = new JScrollPane(textArea,      
 	    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, //設置垂直滾動條策略以使垂直滾動條需要時顯示。
 	    //ScrollPaneConstants. VERTICAL_SCROLLBAR_ALWAYS,  //設置垂直滾動條策略以使垂直滾動條一直顯示。
@@ -241,7 +256,7 @@ public class Final_Work  extends JFrame implements ActionListener
 		// TODO Auto-generated method stub
 		String Filename;  
 		Frame frame = new Frame();
-		FileDialog fd = new FileDialog( frame,"開啟檔案", FileDialog.LOAD);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
+		FileDialog fd = new FileDialog( frame,"開啟舊檔", FileDialog.LOAD);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
 	    fd.setVisible(true); 
 	    if(fd!=null){   
 	        Filename=fd.getDirectory() +fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
@@ -249,36 +264,47 @@ public class Final_Work  extends JFrame implements ActionListener
 	        
 	        try {
 	            FileReader fr=new FileReader(Filename); 
-	            BufferedReader br=new BufferedReader(fr);
+	            BufferedReader bread=new BufferedReader(fr); //串流緩衝
 	            int ch;
-	            while ((ch=br.read()) != -1) {          //BufferedReader 繼承自 Reader 類別的 read() 方法來讀取, 但此方法是一次讀取一個字元, 讀到檔尾時會傳回 -1
+	            int a = 0;
+	            while ((ch=bread.read()) != -1) {          //BufferedReader 繼承自 Reader 類別的 read() 方法來讀取, 但此方法是一次讀取一個字元, 讀到檔尾時會傳回 -1
 	              opench=(char)ch;                     //opench=將ch強制轉成字元
-	              System.out.print(opench);              
+	              System.out.print(opench);   
+	              a++;
+	             if(a==1){continue;}
 	               str=str+String.valueOf(opench);   //字串=字串+強制轉字串後的opench
 	              }
-	             textArea.setText(str);           //最後顯示於TextArea
+	             textArea.setText("");  //清除
+	             textArea.setText(str);           //最後顯示於TextArea 
+	             bread.close();
 	            }
+	        
 	          catch (IOException e) {System.out.println(e);  //捕捉異常並顯示"e"
 	    	
 	    }}
 	}
-	private static AsString AnsiString(Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 	/*filedialog方法儲存檔案*/
-	private static void fgsaveFile() throws IOException {
+	private static void fgsaveFile() throws IOException  {
 		// TODO Auto-generated method stub
-		 
+		String stringfile; 
 		Frame frame = new Frame();
 		FileDialog fd = new FileDialog( frame,"儲存檔案", FileDialog.SAVE);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
 	    fd.setVisible(true); 
-	    fd.setDirectory("Usernull");//設定路徑
 	    if(fd!=null){   
-	        Filename=fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
-	        System.out.println("FileDialog---->"+Filename);  //顯示選擇的檔案路徑+名稱
+	    	 String string1 = textArea.getText();    //檔案內容字串
+	         stringfile = fd.getDirectory()+fd.getFile();       //當按路徑+檔案名稱字串   
+	        try {  
+	            BufferedWriter bwrite = new BufferedWriter(new FileWriter(stringfile));  //串流緩衝區
+	            bwrite.write(string1);   //寫入內容
+	            bwrite.close();   //關閉串流
+	            textArea.setText(textArea.getText()); //在對話框後扔保持文字顯示
+	        } catch (Exception e) {  
+	            // TODO Auto-generated catch block  
+	            System.out.println("保存失敗");  
+	        }   
 	        
 	       }
 	          }
