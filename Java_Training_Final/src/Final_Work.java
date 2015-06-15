@@ -295,7 +295,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	    fd.setVisible(true); 
 	    if(fd!=null){   
 	    	 String string1 = textArea.getText();    //檔案內容字串
-	         stringfile = fd.getDirectory()+fd.getFile();       //當按路徑+檔案名稱字串   
+	         stringfile = fd.getDirectory()+fd.getFile()+".txt";       //當按路徑+檔案名稱字串   
 	        try {  
 	            BufferedWriter bwrite = new BufferedWriter(new FileWriter(stringfile));  //串流緩衝區
 	            bwrite.write(string1);   //寫入內容
