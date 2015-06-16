@@ -35,8 +35,8 @@ public class Final_Work  extends JFrame implements ActionListener
 	public static char opench;
 	public static JTextArea textArea;
 	public static String Filename;
-	public static int W_width = 700;	//視窗寬
-	public static int W_height = 700;	//視窗高
+	public static int W_width = 400;	//視窗寬
+	public static int W_height = 400;	//視窗高
 	public static String First_load;
 	private Timer change_Timer;
 	public JLabel status;
@@ -151,6 +151,12 @@ public class Final_Work  extends JFrame implements ActionListener
 			c.add(ProgrammerC);
 			c.add(ProgrammerCm);
 		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 		
@@ -186,13 +192,13 @@ public class Final_Work  extends JFrame implements ActionListener
             public void mouseReleased(MouseEvent ev)
             {
                 fgopenFile();
-                change_Timer.start();
             }
 		});
 		JMenuItem item;
 		file.add(item = new JMenuItem("儲存檔案(S)",KeyEvent.VK_S));
 		item.addMouseListener(new MouseAdapter() 
 		{
+			
 			@Override
             public void mouseReleased(MouseEvent ev)
             {
@@ -370,29 +376,6 @@ public class Final_Work  extends JFrame implements ActionListener
 	    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, //設置垂直滾動條策略以使垂直滾動條需要時顯示。
 	    //ScrollPaneConstants. VERTICAL_SCROLLBAR_ALWAYS,  //設置垂直滾動條策略以使垂直滾動條一直顯示。
 	    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //設置水平滾動條策略以使水平滾動條不顯示。
-	         
-/*
-	    textArea.addMouseListener( 
-	    		new MouseAdapter() 
-	    		{ 
-	    			public void mouseReleased(MouseEvent e) 
-	    			{ 
-						JPopupMenu popUpMenu = editMenu.getPopupMenu();
-	    				if(e.getButton() == MouseEvent.BUTTON3) //表示滑鼠右鍵
-	    				{
-	    					popUpMenu.show(editMenu, e.getX(), e.getY());
-	    				}
-	    			} 
-	    		
-	    			public void mouseClicked(MouseEvent e) 
-	    			{ 
-						if(e.getButton() == MouseEvent.BUTTON1) //表示滑鼠左鍵
-						{
-							popUpMenu.setVisible(false); 
-						}
-	    			} 
-	    		});
-*/
 	    		
 	    Container contentPane = getContentPane(); 
 	    contentPane.add(panel, BorderLayout.CENTER); 
@@ -406,10 +389,12 @@ public class Final_Work  extends JFrame implements ActionListener
 	    
 	    change_Timer = new Timer(100, this);
 	    change_Timer.addActionListener(new ActionListener() 
-	    {			
+	    {	
+	    	
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
+				
 				if(First_load.equals(textArea.getText()))
 				{
 					status.setText("已儲存");
@@ -418,7 +403,7 @@ public class Final_Work  extends JFrame implements ActionListener
 				{
 					status.setText("未儲存");
 				}
-				change_Timer.restart();
+				change_Timer.start();
 			}
 		});
 
@@ -457,6 +442,8 @@ public class Final_Work  extends JFrame implements ActionListener
 	    fd.setVisible(true); 
 	    if(fd!=null)
 	    {   
+	     if(fd.getDirectory()==null){ return;}           //最後顯示於TextArea 
+	     else{	
 	        Filename=fd.getDirectory() +fd.getFile();   //getDirectory設定檔案的預設路徑, getFile設定檔案的預設檔名
 	        System.out.println("FileDialog---->"+Filename);  //顯示選擇的檔案路徑+名稱
 	        try 
@@ -464,21 +451,19 @@ public class Final_Work  extends JFrame implements ActionListener
 	            FileReader fr=new FileReader(Filename); 
 	            BufferedReader bread=new BufferedReader(fr); //串流緩衝
 	            int ch;
-	            int a = 0;
-	            while ((ch=bread.read()) != -1) 
-	            {          //BufferedReader 繼承自 Reader 類別的 read() 方法來讀取, 但此方法是一次讀取一個字元, 讀到檔尾時會傳回 -1
+	            boolean a = true;
+	            while ((ch=bread.read()) != -1) //BufferedReader 繼承自 Reader 類別的 read() 方法來讀取, 但此方法是一次讀取一個字元, 讀到檔尾時會傳回 -1
+	            {          
 	            	opench=(char)ch;                     //opench=將ch強制轉成字元
 	            	System.out.print(opench);   
-	            	a++;
-	            	if(a==1)
-	            		continue;
-	            	str=str+String.valueOf(opench);   //字串=字串+強制轉字串後的opench
-	            }
+	            	if(a==true){a=false;continue;}
+		               str=str+String.valueOf(opench);   //字串=字串+強制轉字串後的opench
+		              }
 	            textArea.setText("");  //清除
-	            textArea.setText(str);
-	            //最後顯示於TextArea 
+	            textArea.setText(str); //最後顯示於TextArea 
 	            First_load = textArea.getText();	//複製原先內容
-	            bread.close();
+	             bread.close();
+	             str="";
 	        }
 	        
 	        catch (IOException e) 
@@ -487,6 +472,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	        	System.out.println("error_openfile");  //捕捉異常並顯示"e"
 	    	
 	        }
+	     }
 	    }
 	}
 
@@ -502,8 +488,9 @@ public class Final_Work  extends JFrame implements ActionListener
 	    if(fd!=null)
 	    {   
 	    	 String string1 = textArea.getText();    //檔案內容字串
-	         stringfile = fd.getDirectory()+fd.getFile();//當按路徑+檔案名稱字串 
-	         if(!(stringfile.contains(".txt") || stringfile.contains(".TXT")))
+	         stringfile = fd.getDirectory()+fd.getFile();//當按路徑+檔案名稱字串
+	         if(fd.getDirectory()==null){s=true;}           //最後顯示於TextArea 
+	         else  if(!(stringfile.contains(".txt") || stringfile.contains(".TXT")))
 	         {
 	        	 int n= JOptionPane.showConfirmDialog(frame, "檔案副檔名似乎不是文字文件.txt類型，是否設為此類型?", "副檔名問題", JOptionPane.YES_NO_CANCEL_OPTION ,1);
 	        	 if(n==1)
