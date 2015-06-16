@@ -164,7 +164,8 @@ public class Final_Work  extends JFrame implements ActionListener
 	public Final_Work() 
 	{
 		super ("記事本");
-
+		JLabel status;
+		status = new JLabel("未修改"); 
 		/*上方下拉式選單JMenuBar*/
 		JMenuBar upon = new JMenuBar();
 		setJMenuBar(upon);
@@ -192,6 +193,7 @@ public class Final_Work  extends JFrame implements ActionListener
             public void mouseReleased(MouseEvent ev)
             {
                 fgopenFile();
+                change_Timer.start();
             }
 		});
 		JMenuItem item;
@@ -324,8 +326,27 @@ public class Final_Work  extends JFrame implements ActionListener
 		JMenu view  = new JMenu("檢視(V) ");
 		view.setMnemonic(KeyEvent.VK_V);
 		JCheckBoxMenuItem statusBar;
-		statusBar = new JCheckBoxMenuItem("狀態欄");
-		statusBar.addActionListener(this);
+		view.add(statusBar = new JCheckBoxMenuItem("狀態欄"));
+		statusBar.setSelected(true);
+		statusBar.addActionListener(new ActionListener() 
+		{
+			
+				@Override
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					if(statusBar.isSelected())
+					{
+						status.setVisible(true);
+					}
+					else
+					{
+						status.setVisible(false);
+
+					}
+
+				}
+			
+		});
 		view.add(statusBar);
 		upon.add(view);
 		//說明
@@ -381,7 +402,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	    contentPane.add(panel, BorderLayout.CENTER); 
 	      
 	    /*狀態列*/
-	    JLabel status = new JLabel("未修改"); 
+	    
 	    status.setHorizontalAlignment(SwingConstants.LEFT); //設定水平方向的對齊
 	    status.setBorder( 
 	    BorderFactory.createEtchedBorder()); 
@@ -464,6 +485,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	            First_load = textArea.getText();	//複製原先內容
 	             bread.close();
 	             str="";
+	             
 	        }
 	        
 	        catch (IOException e) 
