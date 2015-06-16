@@ -282,7 +282,38 @@ public class Final_Work  extends JFrame implements ActionListener
 				}
 				else
 				{
-				    System.out.println(First_load + " & " + textArea.getText());  
+					int n= JOptionPane.showConfirmDialog(frame, "檔案經修改後尚未儲存，是否直接離開?", "檔案未存警告", JOptionPane.YES_NO_CANCEL_OPTION ,1);
+		        	 if(n==1)
+		        	 {
+		        		 try 
+		 				{
+		 					if(oldfile == false)
+		 					{
+		 						fgsaveFile();
+		 					}
+		 					else
+		 					{
+		 						//TODO 直接存檔功能
+		 					}
+		 					change_Timer.start();
+		 				} 
+		 				catch (IOException es) 
+		 				{
+		 					JOptionPane.showConfirmDialog(frame, "注意!檔案未儲存!\n存檔時發生錯誤，請再試一次!", "錯誤", JOptionPane.ERROR_MESSAGE ,0);
+		 					es.printStackTrace();
+		 				} 
+		        		
+		        	 }
+		        	 else if(n==2)
+		        	 {
+			        	 
+		        		 System.out.println("n=3");
+		        	 }
+		        	 else
+		        	 {
+		        		 change_Timer.stop();
+		        		 closeFile();   
+		        	 } 
 				}
 								
 			}
