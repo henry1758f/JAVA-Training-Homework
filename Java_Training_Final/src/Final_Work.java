@@ -38,7 +38,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	public static int W_width = 600;	//視窗寬
 	public static int W_height = 600;	//視窗高
 	public static String First_load;
-	private Timer change_Timer;
+	public static Timer change_Timer;
 	private Timer title_Timer;
 	public JLabel status;
 	public static String file_name;
@@ -349,8 +349,27 @@ public class Final_Work  extends JFrame implements ActionListener
 		JMenu view  = new JMenu("檢視(V) ");
 		view.setMnemonic(KeyEvent.VK_V);
 		JCheckBoxMenuItem statusBar;
-		statusBar = new JCheckBoxMenuItem("狀態欄");
-		statusBar.addActionListener(this);
+		view.add(statusBar = new JCheckBoxMenuItem("狀態欄"));
+		statusBar.setSelected(true);
+		statusBar.addActionListener(new ActionListener() 
+		{
+					
+				@Override
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					if(statusBar.isSelected())
+					{
+						status.setVisible(true);
+					}
+					else
+					{
+						status.setVisible(false);
+		
+					}
+		
+				}
+					
+		});
 		view.add(statusBar);
 		upon.add(view);
 		//說明
@@ -506,6 +525,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	            textArea.setText(str); //最後顯示於TextArea
 	            file_name=fd.getFile();
 	            First_load = textArea.getText();	//複製原先內容
+				change_Timer.start();
 	             bread.close();
 	             str="";
 	        }
