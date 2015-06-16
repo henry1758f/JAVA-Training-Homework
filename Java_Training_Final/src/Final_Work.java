@@ -35,11 +35,13 @@ public class Final_Work  extends JFrame implements ActionListener
 	public static char opench;
 	public static JTextArea textArea;
 	public static String Filename;
-	public static int W_width = 400;	//視窗寬
-	public static int W_height = 400;	//視窗高
+	public static int W_width = 600;	//視窗寬
+	public static int W_height = 600;	//視窗高
 	public static String First_load;
 	private Timer change_Timer;
+	private Timer title_Timer;
 	public JLabel status;
+	public static String file_name;
 	
 	public class Connect extends JFrame	implements ActionListener	//聯絡我們的畫面
 	{
@@ -113,7 +115,7 @@ public class Final_Work  extends JFrame implements ActionListener
 					// TODO Auto-generated method stub
 					try 
 					{
-						Runtime.getRuntime().exec("cmd /c start " + "mailto:1102104112@gm.kuas.edu.tw");
+						Runtime.getRuntime().exec("cmd /c start " + "mailto:1102104116@gm.kuas.edu.tw");
 					} 
 					catch (IOException e1) 
 					{
@@ -163,11 +165,10 @@ public class Final_Work  extends JFrame implements ActionListener
 	/*主要視窗*/
 	public Final_Work() 
 	{
-		super ("記事本");
-		JLabel status;
-		status = new JLabel("未修改"); 
+		//super ("記事本");
 		/*上方下拉式選單JMenuBar*/
 		JMenuBar upon = new JMenuBar();
+		status = new JLabel("未修改"); 
 		setJMenuBar(upon);
 		//檔案
 		JMenu file = new JMenu("檔案(F) ");
@@ -175,35 +176,51 @@ public class Final_Work  extends JFrame implements ActionListener
 		JMenuItem open;
 		file.add(open= new JMenuItem("開新檔案(N)"));
 		open.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+		open.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				change_Timer.start();
+				textArea.setText("");  //清除
+			}
+		});
 		open.addMouseListener(new MouseAdapter() 
 		{
 			@Override
             public void mouseReleased(MouseEvent ev)
             {
-                change_Timer.start();
-				textArea.setText("");  //清除
+				//滑鼠事件已包含 ctrl快捷鍵的事件
             } 
 		});
 		JMenuItem open1;
 		file.add(open1 = new JMenuItem("開啟舊檔(O)"));
 		open1.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_O,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+		
+		open1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent eo) {
+				// TODO Auto-generated method stub
+				fgopenFile();
+			}
+		});
 		open1.addMouseListener(new MouseAdapter() 
 		{
 			@Override
             public void mouseReleased(MouseEvent ev)
             {
-                fgopenFile();
-                change_Timer.start();
+				//滑鼠事件已包含 ctrl快捷鍵的事件
             }
 		});
-		JMenuItem item;
-		file.add(item = new JMenuItem("儲存檔案(S)",KeyEvent.VK_S));
-		item.addMouseListener(new MouseAdapter() 
-		{
+		JMenuItem save;
+		file.add(save = new JMenuItem("儲存檔案(S)"));
+		save.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_S,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+		save.addActionListener(new ActionListener() {
 			
 			@Override
-            public void mouseReleased(MouseEvent ev)
-            {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				try 
 				{
 					if(oldfile == false)
@@ -216,14 +233,20 @@ public class Final_Work  extends JFrame implements ActionListener
 					}
 					change_Timer.start();
 				} 
-				catch (IOException e) 
+				catch (IOException es) 
 				{
 					JOptionPane.showConfirmDialog(frame, "注意!檔案未儲存!\n存檔時發生錯誤，請再試一次!", "錯誤", JOptionPane.ERROR_MESSAGE ,0);
-					e.printStackTrace();
+					es.printStackTrace();
 				}
-            }
+			}
 		});
-		file.add(item = new JMenuItem("另存新檔(A)",KeyEvent.VK_A));
+		save.addMouseListener(new MouseAdapter() 
+		{
+			//滑鼠事件已包含 ctrl快捷鍵的事件
+		});
+		
+		JMenuItem item;
+		file.add(item = new JMenuItem("另存新檔(A)"));
 		item.addMouseListener(new MouseAdapter() 
 		{
 			@Override
@@ -326,27 +349,8 @@ public class Final_Work  extends JFrame implements ActionListener
 		JMenu view  = new JMenu("檢視(V) ");
 		view.setMnemonic(KeyEvent.VK_V);
 		JCheckBoxMenuItem statusBar;
-		view.add(statusBar = new JCheckBoxMenuItem("狀態欄"));
-		statusBar.setSelected(true);
-		statusBar.addActionListener(new ActionListener() 
-		{
-			
-				@Override
-				public void actionPerformed(ActionEvent arg0) 
-				{
-					if(statusBar.isSelected())
-					{
-						status.setVisible(true);
-					}
-					else
-					{
-						status.setVisible(false);
-
-					}
-
-				}
-			
-		});
+		statusBar = new JCheckBoxMenuItem("狀態欄");
+		statusBar.addActionListener(this);
 		view.add(statusBar);
 		upon.add(view);
 		//說明
@@ -387,12 +391,15 @@ public class Final_Work  extends JFrame implements ActionListener
 		upon.add(help);
 		 /*輸入文字區*/
 		textArea = new JTextArea(); 
-	    //textArea.(new Font("新細明體", Font.PLAIN, 16)); //設定字體及大小
 	    textArea.setFont(new Font("新細明體", Font.PLAIN, 16));
 	    textArea.setForeground(Color.black);//設定文字顏色
 	    textArea.setBackground(Color.white);//設定背景顏色
 	    textArea.setLineWrap(true);//設定自動換行 
 		textArea.setEditable(true);//將textArea設為可編輯(預設)
+	
+		
+		
+		/*視窗設定*/
 	    JScrollPane panel = new JScrollPane(textArea,      
 	    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, //設置垂直滾動條策略以使垂直滾動條需要時顯示。
 	    //ScrollPaneConstants. VERTICAL_SCROLLBAR_ALWAYS,  //設置垂直滾動條策略以使垂直滾動條一直顯示。
@@ -400,10 +407,24 @@ public class Final_Work  extends JFrame implements ActionListener
 	    		
 	    Container contentPane = getContentPane(); 
 	    contentPane.add(panel, BorderLayout.CENTER); 
-	      
-	    /*狀態列*/
+	    /**/
+	    title_Timer = new Timer(100, this);
+	    title_Timer.start();
+	    title_Timer.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+			if(file_name!=null){setTitle(file_name);}
+			else{setTitle("記事本");}
+			}
+		});
 	    
+	    
+	    
+	    /*狀態列*/
 	    status.setHorizontalAlignment(SwingConstants.LEFT); //設定水平方向的對齊
+	    status.setVisible(true); 
 	    status.setBorder( 
 	    BorderFactory.createEtchedBorder()); 
 	    contentPane.add(status, BorderLayout.SOUTH);
@@ -443,7 +464,7 @@ public class Final_Work  extends JFrame implements ActionListener
 						closeFile(); 
 					}
 				}); 	
-
+		mainWin.setLocation(200,50);  //視窗大小
 		mainWin.setSize(W_width, W_height);
 		mainWin.setVisible(true);
 		
@@ -459,7 +480,8 @@ public class Final_Work  extends JFrame implements ActionListener
 	{
 		String Filename;  
 		Frame frame = new Frame();
-		FileDialog fd = new FileDialog( frame,"開啟舊檔", FileDialog.LOAD);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗
+		
+		FileDialog fd = new FileDialog( frame,"開啟舊檔", FileDialog.LOAD);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗 
 	    fd.setVisible(true); 
 	    if(fd!=null)
 	    {   
@@ -481,11 +503,11 @@ public class Final_Work  extends JFrame implements ActionListener
 		               str=str+String.valueOf(opench);   //字串=字串+強制轉字串後的opench
 		              }
 	            textArea.setText("");  //清除
-	            textArea.setText(str); //最後顯示於TextArea 
+	            textArea.setText(str); //最後顯示於TextArea
+	            file_name=fd.getFile();
 	            First_load = textArea.getText();	//複製原先內容
 	             bread.close();
 	             str="";
-	             
 	        }
 	        
 	        catch (IOException e) 
@@ -540,6 +562,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	        		bwrite.write(string1);   //寫入內容
 	        		bwrite.close();   //關閉串流
 	        		textArea.setText(textArea.getText()); //在對話框後扔保持文字顯示
+	        		file_name=fd.getFile();
 	        		First_load = textArea.getText();	//更新修改前的檔案
 	        	}
 	            
@@ -554,10 +577,13 @@ public class Final_Work  extends JFrame implements ActionListener
 	}
 
 
+
+    /*開啟新檔事件*/
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
 		// TODO Auto-generated method stub
+		
 	} 
 
 	
