@@ -8,9 +8,13 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.text.html.HTMLEditorKit.LinkController;
 
 import com.sun.glass.events.WindowEvent;
+import com.sun.glass.ui.Clipboard;
 import com.sun.javafx.binding.SelectBinding.AsString;
 
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,6 +25,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -33,16 +38,19 @@ public class Final_Work  extends JFrame implements ActionListener
 	private static AsString Output [];
 	public static String str= new String();
 	public static char opench;
-	public static JTextArea textArea;
+	public static JTextArea textArea=new JTextArea();
 	public static String Filename;
 	public static int W_width = 600;	//視窗寬
 	public static int W_height = 600;	//視窗高
-	public static String First_load;
-	public static Timer change_Timer;
+	public static String First_load="";
+	private static Timer change_Timer;
 	private Timer title_Timer;
 	public JLabel status;
 	public static String file_name;
-	
+	public static JPopupMenu popup;
+	public static JMenuItem cut,paste,copy,del;
+	static java.awt.datatransfer.Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard(); //剪貼板
+	public static StringSelection StringSelec;
 	public class Connect extends JFrame	implements ActionListener	//聯絡我們的畫面
 	{
 		public Connect()
@@ -50,7 +58,7 @@ public class Final_Work  extends JFrame implements ActionListener
 			super("聯絡作者");
 			Container c =  getContentPane();		//顯示視窗
 			c.setBackground(Color.GRAY);			//設定背景色
-			c.setLayout(new FlowLayout(FlowLayout.LEFT));	//排版靠左
+			c.setLayout(new FlowLayout(FlowLayout.CENTER));	//排版靠中
 			JLabel githubURL = new JLabel("開放資源          ");
 			JButton githubIN = new JButton(" GitHub ");
 			JLabel githubURL1 = new JLabel("                                                                                            ");
@@ -59,7 +67,7 @@ public class Final_Work  extends JFrame implements ActionListener
 			JButton ProgrammerAm = new JButton(" E-mail ");
 			JLabel ProgrammerB = new JLabel("Lilyo                 ");
 			JButton ProgrammerBm = new JButton(" E-mail ");
-			JLabel ProgrammerC = new JLabel("oven of KUAS");
+			JLabel ProgrammerC = new JLabel("syndrlo            ");
 			JButton ProgrammerCm = new JButton(" E-mail ");
 			Font inConnect = new Font("微軟正黑體", Font.BOLD, 20);	//字體設定
 			githubURL.setFont(inConnect);
@@ -132,7 +140,7 @@ public class Final_Work  extends JFrame implements ActionListener
 					// TODO Auto-generated method stub
 					try 
 					{
-						Runtime.getRuntime().exec("cmd /c start " + "mailto:1102104112@gm.kuas.edu.tw");
+						Runtime.getRuntime().exec("cmd /c start " + "mailto:1102104143@gm.kuas.edu.tw");
 					} 
 					catch (IOException e1) 
 					{
@@ -166,9 +174,12 @@ public class Final_Work  extends JFrame implements ActionListener
 	public Final_Work() 
 	{
 		//super ("記事本");
-		/*上方下拉式選單JMenuBar*/
+		change_Timer = new Timer(100, this);
+
+		status = new JLabel("未修改");/*上方下拉式選單JMenuBar*/
+		status.setVisible(true); 
 		JMenuBar upon = new JMenuBar();
-		status = new JLabel("未修改"); 
+		 
 		setJMenuBar(upon);
 		//檔案
 		JMenu file = new JMenu("檔案(F) ");
@@ -202,7 +213,12 @@ public class Final_Work  extends JFrame implements ActionListener
 			@Override
 			public void actionPerformed(ActionEvent eo) {
 				// TODO Auto-generated method stub
-				fgopenFile();
+				try {
+					fgopenFile();
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		open1.addMouseListener(new MouseAdapter() 
@@ -331,6 +347,7 @@ public class Final_Work  extends JFrame implements ActionListener
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				cut();
 			}
 		});
 		edit.add(item = new JMenuItem("複製(C)",KeyEvent.VK_C));
@@ -340,6 +357,7 @@ public class Final_Work  extends JFrame implements ActionListener
 			public void actionPerformed(ActionEvent e) 
 			{
 				// TODO Auto-generated method stub
+				copy();
 			}
 		});
 		edit.add(item = new JMenuItem("貼上(P)",KeyEvent.VK_P));
@@ -349,10 +367,18 @@ public class Final_Work  extends JFrame implements ActionListener
 			public void actionPerformed(ActionEvent e) 
 			{
 				// TODO Auto-generated method stub
+				paste();
 			}
 		});
 		edit.add(item = new JMenuItem("刪除(L)",KeyEvent.VK_L));
-		item.addActionListener(this);
+		item.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				del();
+			}
+		});
 		edit.addSeparator();
 		edit.add(item = new JMenuItem("尋找(F)",KeyEvent.VK_F));
 		item.addActionListener(this);
@@ -380,7 +406,7 @@ public class Final_Work  extends JFrame implements ActionListener
 		JMenu view  = new JMenu("檢視(V) ");
 		view.setMnemonic(KeyEvent.VK_V);
 		JCheckBoxMenuItem statusBar;
-		view.add(statusBar = new JCheckBoxMenuItem("狀態欄"));
+		statusBar = new JCheckBoxMenuItem("狀態欄");
 		statusBar.setSelected(true);
 		statusBar.addActionListener(new ActionListener() 
 		{
@@ -474,12 +500,11 @@ public class Final_Work  extends JFrame implements ActionListener
 	    
 	    /*狀態列*/
 	    status.setHorizontalAlignment(SwingConstants.LEFT); //設定水平方向的對齊
-	    status.setVisible(true); 
 	    status.setBorder( 
 	    BorderFactory.createEtchedBorder()); 
 	    contentPane.add(status, BorderLayout.SOUTH);
 	    
-	    change_Timer = new Timer(100, this);
+	    //change_Timer.start();
 	    change_Timer.addActionListener(new ActionListener() 
 	    {	
 	    	
@@ -498,9 +523,65 @@ public class Final_Work  extends JFrame implements ActionListener
 				change_Timer.start();
 			}
 		});
-
+	    popup =new JPopupMenu();
+	    popup.add(cut=new JMenuItem("剪下"));
+	    cut.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+	    cut.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				cut();
+			}
+		});
+	    popup.add(copy=new JMenuItem("複製"));
+	    copy.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_C,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+	    copy.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				copy();
+			}
+		});
+	    popup.add(paste=new JMenuItem("貼上"));
+	    paste.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_V,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+	    paste.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				paste();
+			}
+		});
+	    popup.addSeparator();
+	    popup.add(del=new JMenuItem("刪除"));
+	    del.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_D,InputEvent.CTRL_MASK));//Ctrl快捷鍵
+	    del.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				del();
+			}
+		});
+	    
+	    textArea.addMouseListener(new MouseAdapter() {
+	    	public void mousePressed(MouseEvent evt){
+	    		if(evt.isPopupTrigger()){
+	    			popup.show(evt.getComponent(), evt.getX(), evt.getY());
+	    		}
+	    	}
+	    	public void mouseReleased(MouseEvent evt){
+	    		if(evt.isPopupTrigger()){
+	    			popup.show(evt.getComponent(), evt.getX(), evt.getY());
+	    		}
+	    	}
+	    	
+		});
+	    
 	}
-
+     
 
 	public static void main(String[] args) throws IOException 
 	{
@@ -526,9 +607,9 @@ public class Final_Work  extends JFrame implements ActionListener
 	}
 
 	/*filedialog方法開檔*/
-	private static void fgopenFile() 
+	private static void fgopenFile() throws UnsupportedEncodingException 
 	{
-		String Filename;  
+		String Filename=new String(str.getBytes("UTF-8"), "GB2312"); //UTF-8轉換ANSI編碼   
 		Frame frame = new Frame();
 		
 		FileDialog fd = new FileDialog( frame,"開啟舊檔", FileDialog.LOAD);   //LOAD=>整數 0 ，設定為開啟檔案的對話視窗 
@@ -549,16 +630,16 @@ public class Final_Work  extends JFrame implements ActionListener
 	            {          
 	            	opench=(char)ch;                     //opench=將ch強制轉成字元
 	            	System.out.print(opench);   
-	            	if(a==true){a=false;continue;}
+	            	//if(a==true){a=false;continue;}
 		               str=str+String.valueOf(opench);   //字串=字串+強制轉字串後的opench
 		              }
 	            textArea.setText("");  //清除
 	            textArea.setText(str); //最後顯示於TextArea
 	            file_name=fd.getFile();
 	            First_load = textArea.getText();	//複製原先內容
-				change_Timer.start();
 	             bread.close();
 	             str="";
+	             change_Timer.start();
 	        }
 	        
 	        catch (IOException e) 
@@ -627,8 +708,33 @@ public class Final_Work  extends JFrame implements ActionListener
 	    }
 	}
 
+	private static void cut(){
+		
+	}
+	private static void copy(){
+		 String copy_string = textArea.getSelectedText();  //取得textArea內選取的字串
+         StringSelec = new StringSelection(copy_string);   //將內容丟給StringSelec
+         cb.setContents(StringSelec,null);//把內容放到系統剪貼板
+	}
+	private static void paste(){
+		try {
+			String paste_string = null; 
+			Transferable tr = cb.getContents( StringSelec ); //從系統剪貼板得到一個Transferable對象
+			if  (tr != null ){
+			
+			paste_string =(String) tr.getTransferData(DataFlavor.stringFlavor); //從Transferable對像中得到複製的文字
+			}
+			if  (paste_string!= null ){
+				textArea.insert((String) paste_string, textArea.getCaretPosition()); //將文字貼在textArea.getCaretPosition()這個位置
 
-
+			}
+			} catch (Exception err){
+			 err.printStackTrace();
+			}
+	}
+	private static void del(){
+		
+	}
     /*開啟新檔事件*/
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
