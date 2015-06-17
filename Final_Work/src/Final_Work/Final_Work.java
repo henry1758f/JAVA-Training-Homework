@@ -1,4 +1,4 @@
-/*æ–‡ä»¶ç·¨ç¢¼è«‹é¸æ“‡UTF-8*/
+/*¤å¥ó½s½X½Ğ¿ï¾ÜUTF-8*/
 package Final_Work;
 import javax.management.openmbean.OpenDataException;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
@@ -6,11 +6,6 @@ import javax.net.ssl.SSLEngineResult.Status;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.text.html.HTMLEditorKit.LinkController;
-
-import com.sun.glass.events.WindowEvent;
-import com.sun.glass.ui.Clipboard;
-import com.sun.javafx.binding.SelectBinding.AsString;
-
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -35,13 +30,13 @@ public class Final_Work  extends JFrame implements ActionListener
 {
 	boolean oldfile = false;
 	Frame frame = new Frame();
-	private static AsString Output [];
+	private static char Output [];
 	public static String str= new String();
 	public static char opench;
 	public static JTextArea textArea=new JTextArea();
 	public static String Filename;
-	public static int W_width = 600;	//è¦–çª—å¯¬
-	public static int W_height = 600;	//è¦–çª—é«˜
+	public static int W_width = 600;	//µøµ¡¼e
+	public static int W_height = 600;	//µøµ¡°ª
 	public static String First_load="";
 	private static Timer change_Timer;
 	private Timer title_Timer;
@@ -49,27 +44,27 @@ public class Final_Work  extends JFrame implements ActionListener
 	public static String file_name;
 	public static JPopupMenu popup;
 	public static JMenuItem cut,paste,copy,del;
-	static java.awt.datatransfer.Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard(); //å‰ªè²¼æ¿
+	static java.awt.datatransfer.Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard(); //°Å¶KªO
 	public static StringSelection StringSelec;
-	public class Connect extends JFrame	implements ActionListener	//è¯çµ¡æˆ‘å€‘çš„ç•«é¢
+	public class Connect extends JFrame	implements ActionListener	//Ápµ¸§Ú­Ìªºµe­±
 	{
 		public Connect()
 		{
-			super("è¯çµ¡ä½œè€…");
-			Container c =  getContentPane();		//é¡¯ç¤ºè¦–çª—
-			c.setBackground(Color.GRAY);			//è¨­å®šèƒŒæ™¯è‰²
-			c.setLayout(new FlowLayout(FlowLayout.CENTER));	//æ’ç‰ˆé ä¸­
-			JLabel githubURL = new JLabel("é–‹æ”¾è³‡æº          ");
+			super("Ápµ¸§@ªÌ");
+			Container c =  getContentPane();		//Åã¥Üµøµ¡
+			c.setBackground(Color.GRAY);			//³]©w­I´º¦â
+			c.setLayout(new FlowLayout(FlowLayout.CENTER));	//±Æª©¾a¤¤
+			JLabel githubURL = new JLabel("¶}©ñ¸ê·½          ");
 			JButton githubIN = new JButton(" GitHub ");
 			JLabel githubURL1 = new JLabel("                                                                                            ");
-			JLabel Programmer = new JLabel("è¯çµ¡ä½œè€…                                                                           ");
+			JLabel Programmer = new JLabel("Ápµ¸§@ªÌ                                                                           ");
 			JLabel ProgrammerA = new JLabel("henry1758f    ");
 			JButton ProgrammerAm = new JButton(" E-mail ");
 			JLabel ProgrammerB = new JLabel("Lilyo                 ");
 			JButton ProgrammerBm = new JButton(" E-mail ");
 			JLabel ProgrammerC = new JLabel("syndrlo            ");
 			JButton ProgrammerCm = new JButton(" E-mail ");
-			Font inConnect = new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 20);	//å­—é«”è¨­å®š
+			Font inConnect = new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 20);	//¦rÅé³]©w
 			githubURL.setFont(inConnect);
 			githubURL.setForeground(Color.WHITE);
 			Programmer.setFont(inConnect);
@@ -149,7 +144,7 @@ public class Final_Work  extends JFrame implements ActionListener
 					}
 				}
 			});
-			/*åŠ é€²ä»‹é¢ä¸­*/
+			/*¥[¶i¤¶­±¤¤*/
 			c.add(githubURL);
 			c.add(githubIN);
 			c.add(githubURL1);
@@ -170,30 +165,30 @@ public class Final_Work  extends JFrame implements ActionListener
 		
 	}
 		
-	/*ä¸»è¦è¦–çª—*/
+	/*¥D­nµøµ¡*/
 	public Final_Work() 
 	{
-		//super ("è¨˜äº‹æœ¬");
+		//super ("°O¨Æ¥»");
 		change_Timer = new Timer(100, this);
 
-		status = new JLabel("æœªä¿®æ”¹");/*ä¸Šæ–¹ä¸‹æ‹‰å¼é¸å–®JMenuBar*/
+		status = new JLabel("¥¼­×§ï");/*¤W¤è¤U©Ô¦¡¿ï³æJMenuBar*/
 		status.setVisible(true); 
 		JMenuBar upon = new JMenuBar();
 		 
 		setJMenuBar(upon);
-		//æª”æ¡ˆ
-		JMenu file = new JMenu("æª”æ¡ˆ(F) ");
+		//ÀÉ®×
+		JMenu file = new JMenu("ÀÉ®×(F) ");
 		file.setMnemonic(KeyEvent.VK_F);
 		JMenuItem open;
-		file.add(open= new JMenuItem("é–‹æ–°æª”æ¡ˆ(N)"));
-		open.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N,InputEvent.CTRL_MASK));//Ctrlå¿«æ·éµ
+		file.add(open= new JMenuItem("¶}·sÀÉ®×(N)"));
+		open.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N,InputEvent.CTRL_MASK));//Ctrl§Ö±¶Áä
 		open.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				change_Timer.start();
-				textArea.setText("");  //æ¸…é™¤
+				textArea.setText("");  //²M°£
 			}
 		});
 		open.addMouseListener(new MouseAdapter() 
@@ -201,12 +196,12 @@ public class Final_Work  extends JFrame implements ActionListener
 			@Override
             public void mouseReleased(MouseEvent ev)
             {
-				//æ»‘é¼ äº‹ä»¶å·²åŒ…å« ctrlå¿«æ·éµçš„äº‹ä»¶
+				//·Æ¹«¨Æ¥ó¤w¥]§t ctrl§Ö±¶Áäªº¨Æ¥ó
             } 
 		});
 		JMenuItem open1;
-		file.add(open1 = new JMenuItem("é–‹å•ŸèˆŠæª”(O)"));
-		open1.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_O,InputEvent.CTRL_MASK));//Ctrlå¿«æ·éµ
+		file.add(open1 = new JMenuItem("¶}±ÒÂÂÀÉ(O)"));
+		open1.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_O,InputEvent.CTRL_MASK));//Ctrl§Ö±¶Áä
 		
 		open1.addActionListener(new ActionListener() {
 			
@@ -226,12 +221,12 @@ public class Final_Work  extends JFrame implements ActionListener
 			@Override
             public void mouseReleased(MouseEvent ev)
             {
-				//æ»‘é¼ äº‹ä»¶å·²åŒ…å« ctrlå¿«æ·éµçš„äº‹ä»¶
+				//·Æ¹«¨Æ¥ó¤w¥]§t ctrl§Ö±¶Áäªº¨Æ¥ó
             }
 		});
 		JMenuItem save;
-		file.add(save = new JMenuItem("å„²å­˜æª”æ¡ˆ(S)"));
-		save.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_S,InputEvent.CTRL_MASK));//Ctrlå¿«æ·éµ
+		file.add(save = new JMenuItem("Àx¦sÀÉ®×(S)"));
+		save.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_S,InputEvent.CTRL_MASK));//Ctrl§Ö±¶Áä
 		save.addActionListener(new ActionListener() {
 			
 			@Override
@@ -245,24 +240,24 @@ public class Final_Work  extends JFrame implements ActionListener
 					}
 					else
 					{
-						//TODO ç›´æ¥å­˜æª”åŠŸèƒ½
+						//TODO ª½±µ¦sÀÉ¥\¯à
 					}
 					change_Timer.start();
 				} 
 				catch (IOException es) 
 				{
-					JOptionPane.showConfirmDialog(frame, "æ³¨æ„!æª”æ¡ˆæœªå„²å­˜!\nå­˜æª”æ™‚ç™¼ç”ŸéŒ¯èª¤ï¼Œè«‹å†è©¦ä¸€æ¬¡!", "éŒ¯èª¤", JOptionPane.ERROR_MESSAGE ,0);
+					JOptionPane.showConfirmDialog(frame, "ª`·N!ÀÉ®×¥¼Àx¦s!\n¦sÀÉ®Éµo¥Í¿ù»~¡A½Ğ¦A¸Õ¤@¦¸!", "¿ù»~", JOptionPane.ERROR_MESSAGE ,0);
 					es.printStackTrace();
 				}
 			}
 		});
 		save.addMouseListener(new MouseAdapter() 
 		{
-			//æ»‘é¼ äº‹ä»¶å·²åŒ…å« ctrlå¿«æ·éµçš„äº‹ä»¶
+			//·Æ¹«¨Æ¥ó¤w¥]§t ctrl§Ö±¶Áäªº¨Æ¥ó
 		});
 		
 		JMenuItem item;
-		file.add(item = new JMenuItem("å¦å­˜æ–°æª”(A)"));
+		file.add(item = new JMenuItem("¥t¦s·sÀÉ(A)"));
 		item.addMouseListener(new MouseAdapter() 
 		{
 			@Override
@@ -275,20 +270,20 @@ public class Final_Work  extends JFrame implements ActionListener
 				} 
 				catch (IOException e) 
 				{
-					JOptionPane.showConfirmDialog(frame, "æ³¨æ„!æª”æ¡ˆæœªå„²å­˜!\nå­˜æª”æ™‚ç™¼ç”ŸéŒ¯èª¤ï¼Œè«‹å†è©¦ä¸€æ¬¡!", "éŒ¯èª¤", JOptionPane.ERROR_MESSAGE ,0);
+					JOptionPane.showConfirmDialog(frame, "ª`·N!ÀÉ®×¥¼Àx¦s!\n¦sÀÉ®Éµo¥Í¿ù»~¡A½Ğ¦A¸Õ¤@¦¸!", "¿ù»~", JOptionPane.ERROR_MESSAGE ,0);
 					e.printStackTrace();
 				}
             }
 		});
 		file.addSeparator();
-		file.add(item = new JMenuItem("ç‰ˆé¢è¨­å®š(U)",KeyEvent.VK_U));
+		file.add(item = new JMenuItem("ª©­±³]©w(U)",KeyEvent.VK_U));
 		item.addActionListener(this);
-		file.add(item = new JMenuItem("åˆ—å°(P)",KeyEvent.VK_P));
+		file.add(item = new JMenuItem("¦C¦L(P)",KeyEvent.VK_P));
 		item.addActionListener(this);
 		file.addSeparator();
-		file.add(item = new JMenuItem("çµæŸ(X)",KeyEvent.VK_X));
+		file.add(item = new JMenuItem("µ²§ô(X)",KeyEvent.VK_X));
 		item.addActionListener(new ActionListener() 
-		{              //å³ä¸Šè§’é—œé–‰äº‹ä»¶
+		{              //¥k¤W¨¤Ãö³¬¨Æ¥ó
 			public void actionPerformed(ActionEvent e) 
 			{ 
 				if(First_load.equals(textArea.getText()))
@@ -298,7 +293,7 @@ public class Final_Work  extends JFrame implements ActionListener
 				}
 				else
 				{
-					int n= JOptionPane.showConfirmDialog(frame, "æª”æ¡ˆç¶“ä¿®æ”¹å¾Œå°šæœªå„²å­˜ï¼Œæ˜¯å¦ç›´æ¥é›¢é–‹?", "æª”æ¡ˆæœªå­˜è­¦å‘Š", JOptionPane.YES_NO_CANCEL_OPTION ,1);
+					int n= JOptionPane.showConfirmDialog(frame, "ÀÉ®×¸g­×§ï«á©|¥¼Àx¦s¡A¬O§_ª½±µÂ÷¶}?", "ÀÉ®×¥¼¦sÄµ§i", JOptionPane.YES_NO_CANCEL_OPTION ,1);
 		        	 if(n==1)
 		        	 {
 		        		 try 
@@ -309,13 +304,13 @@ public class Final_Work  extends JFrame implements ActionListener
 		 					}
 		 					else
 		 					{
-		 						//TODO ç›´æ¥å­˜æª”åŠŸèƒ½
+		 						//TODO ª½±µ¦sÀÉ¥\¯à
 		 					}
 		 					change_Timer.start();
 		 				} 
 		 				catch (IOException es) 
 		 				{
-		 					JOptionPane.showConfirmDialog(frame, "æ³¨æ„!æª”æ¡ˆæœªå„²å­˜!\nå­˜æª”æ™‚ç™¼ç”ŸéŒ¯èª¤ï¼Œè«‹å†è©¦ä¸€æ¬¡!", "éŒ¯èª¤", JOptionPane.ERROR_MESSAGE ,0);
+		 					JOptionPane.showConfirmDialog(frame, "ª`·N!ÀÉ®×¥¼Àx¦s!\n¦sÀÉ®Éµo¥Í¿ù»~¡A½Ğ¦A¸Õ¤@¦¸!", "¿ù»~", JOptionPane.ERROR_MESSAGE ,0);
 		 					es.printStackTrace();
 		 				} 
 		        		
@@ -335,13 +330,13 @@ public class Final_Work  extends JFrame implements ActionListener
 			}
 		});
 		upon.add(file);
-		//ç·¨è¼¯
-		JMenu edit = new JMenu("ç·¨è¼¯(E) ");
+		//½s¿è
+		JMenu edit = new JMenu("½s¿è(E) ");
 		edit.setMnemonic(KeyEvent.VK_E);
-		edit.add(item = new JMenuItem("å¾©åŸ(Z)",KeyEvent.VK_Z));
+		edit.add(item = new JMenuItem("´_­ì(Z)",KeyEvent.VK_Z));
 		item.addActionListener(this);
 		edit.addSeparator();
-		edit.add(item = new JMenuItem("å‰ªä¸‹(T)",KeyEvent.VK_T));
+		edit.add(item = new JMenuItem("°Å¤U(T)",KeyEvent.VK_T));
 		item.addActionListener(new ActionListener() 
 		{
 			@Override
@@ -350,7 +345,7 @@ public class Final_Work  extends JFrame implements ActionListener
 				cut();
 			}
 		});
-		edit.add(item = new JMenuItem("è¤‡è£½(C)",KeyEvent.VK_C));
+		edit.add(item = new JMenuItem("½Æ»s(C)",KeyEvent.VK_C));
 		item.addActionListener(new ActionListener() 
 		{
 			@Override
@@ -360,7 +355,7 @@ public class Final_Work  extends JFrame implements ActionListener
 				copy();
 			}
 		});
-		edit.add(item = new JMenuItem("è²¼ä¸Š(P)",KeyEvent.VK_P));
+		edit.add(item = new JMenuItem("¶K¤W(P)",KeyEvent.VK_P));
 		item.addActionListener(new ActionListener() 
 		{
 			@Override
@@ -370,7 +365,7 @@ public class Final_Work  extends JFrame implements ActionListener
 				paste();
 			}
 		});
-		edit.add(item = new JMenuItem("åˆªé™¤(L)",KeyEvent.VK_L));
+		edit.add(item = new JMenuItem("§R°£(L)",KeyEvent.VK_L));
 		item.addActionListener(new ActionListener() {
 			
 			@Override
@@ -380,33 +375,33 @@ public class Final_Work  extends JFrame implements ActionListener
 			}
 		});
 		edit.addSeparator();
-		edit.add(item = new JMenuItem("å°‹æ‰¾(F)",KeyEvent.VK_F));
+		edit.add(item = new JMenuItem("´M§ä(F)",KeyEvent.VK_F));
 		item.addActionListener(this);
-		edit.add(item = new JMenuItem("æ‰¾ä¸‹ä¸€å€‹(N)",KeyEvent.VK_N));
+		edit.add(item = new JMenuItem("§ä¤U¤@­Ó(N)",KeyEvent.VK_N));
 		item.addActionListener(this);
-		edit.add(item = new JMenuItem("å–ä»£(R)",KeyEvent.VK_R));
+		edit.add(item = new JMenuItem("¨ú¥N(R)",KeyEvent.VK_R));
 		item.addActionListener(this);
 		edit.addSeparator();
-		edit.add(item = new JMenuItem("å…¨é¸(A)",KeyEvent.VK_A));
+		edit.add(item = new JMenuItem("¥ş¿ï(A)",KeyEvent.VK_A));
 		item.addActionListener(this);
-		edit.add(item = new JMenuItem("æ™‚é–“/æ—¥æœŸ(D)",KeyEvent.VK_D));
+		edit.add(item = new JMenuItem("®É¶¡/¤é´Á(D)",KeyEvent.VK_D));
 		item.addActionListener(this);
 		upon.add(edit);
-		//æ ¼å¼
-		JMenu form = new JMenu("æ ¼å¼(O) ");
+		//®æ¦¡
+		JMenu form = new JMenu("®æ¦¡(O) ");
 		form.setMnemonic(KeyEvent.VK_O);
 		JCheckBoxMenuItem autowrap;
-		autowrap = new JCheckBoxMenuItem("è‡ªå‹•æ›è¡Œ");
+		autowrap = new JCheckBoxMenuItem("¦Û°Ê´«¦æ");
 		autowrap.addActionListener(this);
 		form.add(autowrap);
-		form.add(item = new JMenuItem("å­—å‹(F)",KeyEvent.VK_F));
+		form.add(item = new JMenuItem("¦r«¬(F)",KeyEvent.VK_F));
 		item.addActionListener(this);
 		upon.add(form);
-		//æª¢è¦–
-		JMenu view  = new JMenu("æª¢è¦–(V) ");
+		//ÀËµø
+		JMenu view  = new JMenu("ÀËµø(V) ");
 		view.setMnemonic(KeyEvent.VK_V);
 		JCheckBoxMenuItem statusBar;
-		statusBar = new JCheckBoxMenuItem("ç‹€æ…‹æ¬„");
+		statusBar = new JCheckBoxMenuItem("ª¬ºAÄæ");
 		statusBar.setSelected(true);
 		statusBar.addActionListener(new ActionListener() 
 		{
@@ -429,10 +424,10 @@ public class Final_Work  extends JFrame implements ActionListener
 		});
 		view.add(statusBar);
 		upon.add(view);
-		//èªªæ˜
-		JMenu help = new JMenu("èªªæ˜(H) ");
+		//»¡©ú
+		JMenu help = new JMenu("»¡©ú(H) ");
 		help.setMnemonic(KeyEvent.VK_H);
-		help.add(item = new JMenuItem("å•é¡Œå›å ±(R)",KeyEvent.VK_R));
+		help.add(item = new JMenuItem("°İÃD¦^³ø(R)",KeyEvent.VK_R));
 		item.addActionListener(new ActionListener() 
 		{
 			@Override
@@ -446,40 +441,40 @@ public class Final_Work  extends JFrame implements ActionListener
 			}
 		});
 		help.addSeparator();
-		help.add(item = new JMenuItem("é—œæ–¼(A)",KeyEvent.VK_A));
+		help.add(item = new JMenuItem("Ãö©ó(A)",KeyEvent.VK_A));
 		item.addActionListener(new ActionListener() 
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
 				JOptionPane.showOptionDialog(null, 
-											"ç¨‹å¼åç¨±: ç°¡æ˜“å‹ç­†è¨˜æœ¬ \n" + 
-											"ç¨‹å¼è¨­è¨ˆè€…: å³ä¾‘å³°  é»ƒå®£éŒ¡  ç¾…æ°¸æš‰  \n" + 
-											"ç°¡ä»‹: ç°¡å–®çš„æ–‡å­—ç·¨è¼¯å™¨\n" , 
-											"é—œæ–¼ç°¡æ˜“å‹ç­†è¨˜æœ¬",              //title
+											"µ{¦¡¦WºÙ: Â²©ö«¬µ§°O¥» \n" + 
+											"µ{¦¡³]­pªÌ: §d¨İ®p  ¶À«ÅÀB  Ã¹¥Ã·u  \n" + 
+											"Â²¤¶: Â²³æªº¤å¦r½s¿è¾¹\n" , 
+											"Ãö©óÂ²©ö«¬µ§°O¥»",              //title
 											JOptionPane.DEFAULT_OPTION,     
-											JOptionPane.INFORMATION_MESSAGE,  //è­¦ç¤ºåœ–ç¤º
+											JOptionPane.INFORMATION_MESSAGE,  //Äµ¥Ü¹Ï¥Ü
 											null, 
 											null, 
 											null); 
 			}
 		});
 		upon.add(help);
-		 /*è¼¸å…¥æ–‡å­—å€*/
+		 /*¿é¤J¤å¦r°Ï*/
 		textArea = new JTextArea(); 
-	    textArea.setFont(new Font("æ–°ç´°æ˜é«”", Font.PLAIN, 16));
-	    textArea.setForeground(Color.black);//è¨­å®šæ–‡å­—é¡è‰²
-	    textArea.setBackground(Color.white);//è¨­å®šèƒŒæ™¯é¡è‰²
-	    textArea.setLineWrap(true);//è¨­å®šè‡ªå‹•æ›è¡Œ 
-		textArea.setEditable(true);//å°‡textAreaè¨­ç‚ºå¯ç·¨è¼¯(é è¨­)
+	    textArea.setFont(new Font("·s²Ó©úÅé", Font.PLAIN, 16));
+	    textArea.setForeground(Color.black);//³]©w¤å¦rÃC¦â
+	    textArea.setBackground(Color.white);//³]©w­I´ºÃC¦â
+	    textArea.setLineWrap(true);//³]©w¦Û°Ê´«¦æ 
+		textArea.setEditable(true);//±NtextArea³]¬°¥i½s¿è(¹w³])
 	
 		
 		
-		/*è¦–çª—è¨­å®š*/
+		/*µøµ¡³]©w*/
 	    JScrollPane panel = new JScrollPane(textArea,      
-	    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, //è¨­ç½®å‚ç›´æ»¾å‹•æ¢ç­–ç•¥ä»¥ä½¿å‚ç›´æ»¾å‹•æ¢éœ€è¦æ™‚é¡¯ç¤ºã€‚
-	    //ScrollPaneConstants. VERTICAL_SCROLLBAR_ALWAYS,  //è¨­ç½®å‚ç›´æ»¾å‹•æ¢ç­–ç•¥ä»¥ä½¿å‚ç›´æ»¾å‹•æ¢ä¸€ç›´é¡¯ç¤ºã€‚
-	    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //è¨­ç½®æ°´å¹³æ»¾å‹•æ¢ç­–ç•¥ä»¥ä½¿æ°´å¹³æ»¾å‹•æ¢ä¸é¡¯ç¤ºã€‚
+	    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, //³]¸m««ª½ºu°Ê±øµ¦²¤¥H¨Ï««ª½ºu°Ê±ø»İ­n®ÉÅã¥Ü¡C
+	    //ScrollPaneConstants. VERTICAL_SCROLLBAR_ALWAYS,  //³]¸m««ª½ºu°Ê±øµ¦²¤¥H¨Ï««ª½ºu°Ê±ø¤@ª½Åã¥Ü¡C
+	    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); //³]¸m¤ô¥­ºu°Ê±øµ¦²¤¥H¨Ï¤ô¥­ºu°Ê±ø¤£Åã¥Ü¡C
 	    		
 	    Container contentPane = getContentPane(); 
 	    contentPane.add(panel, BorderLayout.CENTER); 
@@ -492,19 +487,17 @@ public class Final_Work  extends JFrame implements ActionListener
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 			if(file_name!=null){setTitle(file_name);}
-			else{setTitle("è¨˜äº‹æœ¬");}
+			else{setTitle("°O¨Æ¥»");}
 			}
 		});
 	    
 	    
 	    
-	    /*ç‹€æ…‹åˆ—*/
-	    status.setHorizontalAlignment(SwingConstants.LEFT); //è¨­å®šæ°´å¹³æ–¹å‘çš„å°é½Š
+	    /*ª¬ºA¦C*/
+	    status.setHorizontalAlignment(SwingConstants.LEFT); //³]©w¤ô¥­¤è¦Vªº¹ï»ô
 	    status.setBorder( 
 	    BorderFactory.createEtchedBorder()); 
 	    contentPane.add(status, BorderLayout.SOUTH);
-	    
-	    //change_Timer.start();
 	    change_Timer.addActionListener(new ActionListener() 
 	    {	
 	    	
@@ -514,18 +507,18 @@ public class Final_Work  extends JFrame implements ActionListener
 				
 				if(First_load.equals(textArea.getText()))
 				{
-					status.setText("å·²å„²å­˜");
+					status.setText("¤wÀx¦s");
 				}
 				else
 				{
-					status.setText("æœªå„²å­˜");
+					status.setText("¥¼Àx¦s");
 				}
 				change_Timer.start();
 			}
 		});
 	    popup =new JPopupMenu();
-	    popup.add(cut=new JMenuItem("å‰ªä¸‹"));
-	    cut.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T,InputEvent.CTRL_MASK));//Ctrlå¿«æ·éµ
+	    popup.add(cut=new JMenuItem("°Å¤U"));
+	    cut.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T,InputEvent.CTRL_MASK));//Ctrl§Ö±¶Áä
 	    cut.addActionListener(new ActionListener() {
 			
 			@Override
@@ -534,8 +527,8 @@ public class Final_Work  extends JFrame implements ActionListener
 				cut();
 			}
 		});
-	    popup.add(copy=new JMenuItem("è¤‡è£½"));
-	    copy.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_C,InputEvent.CTRL_MASK));//Ctrlå¿«æ·éµ
+	    popup.add(copy=new JMenuItem("½Æ»s"));
+	    copy.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_C,InputEvent.CTRL_MASK));//Ctrl§Ö±¶Áä
 	    copy.addActionListener(new ActionListener() {
 			
 			@Override
@@ -544,8 +537,8 @@ public class Final_Work  extends JFrame implements ActionListener
 				copy();
 			}
 		});
-	    popup.add(paste=new JMenuItem("è²¼ä¸Š"));
-	    paste.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_V,InputEvent.CTRL_MASK));//Ctrlå¿«æ·éµ
+	    popup.add(paste=new JMenuItem("¶K¤W"));
+	    paste.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_V,InputEvent.CTRL_MASK));//Ctrl§Ö±¶Áä
 	    paste.addActionListener(new ActionListener() {
 			
 			@Override
@@ -555,8 +548,8 @@ public class Final_Work  extends JFrame implements ActionListener
 			}
 		});
 	    popup.addSeparator();
-	    popup.add(del=new JMenuItem("åˆªé™¤"));
-	    del.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_D,InputEvent.CTRL_MASK));//Ctrlå¿«æ·éµ
+	    popup.add(del=new JMenuItem("§R°£"));
+	    del.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_D,InputEvent.CTRL_MASK));//Ctrl§Ö±¶Áä
 	    del.addActionListener(new ActionListener() {
 			
 			@Override
@@ -587,7 +580,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	{
 		Final_Work mainWin = new Final_Work();
 		//mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		mainWin.addWindowListener(                           //å³ä¸Šè§’é—œé–‰äº‹ä»¶
+		mainWin.addWindowListener(                           //¥k¤W¨¤Ãö³¬¨Æ¥ó
 				new WindowAdapter() 
 				{ 
 					public void windowClosing(WindowEvent e) 
@@ -595,48 +588,48 @@ public class Final_Work  extends JFrame implements ActionListener
 						closeFile(); 
 					}
 				}); 	
-		mainWin.setLocation(200,50);  //è¦–çª—å¤§å°
+		mainWin.setLocation(200,50);  //µøµ¡¤j¤p
 		mainWin.setSize(W_width, W_height);
 		mainWin.setVisible(true);
 		
 	}
 
-	/*é—œé–‰æª”æ¡ˆ*/
+	/*Ãö³¬ÀÉ®×*/
 	private static void closeFile() {
 		 System.exit(0);
 	}
 
-	/*filedialogæ–¹æ³•é–‹æª”*/
+	/*filedialog¤èªk¶}ÀÉ*/
 	private static void fgopenFile() throws UnsupportedEncodingException 
 	{
-		String Filename=new String(str.getBytes("UTF-8"), "GB2312"); //UTF-8è½‰æ›ANSIç·¨ç¢¼   
+		String Filename=new String(str.getBytes("UTF-8"), "GB2312"); //UTF-8Âà´«ANSI½s½X   
 		Frame frame = new Frame();
 		
-		FileDialog fd = new FileDialog( frame,"é–‹å•ŸèˆŠæª”", FileDialog.LOAD);   //LOAD=>æ•´æ•¸ 0 ï¼Œè¨­å®šç‚ºé–‹å•Ÿæª”æ¡ˆçš„å°è©±è¦–çª— 
+		FileDialog fd = new FileDialog( frame,"¶}±ÒÂÂÀÉ", FileDialog.LOAD);   //LOAD=>¾ã¼Æ 0 ¡A³]©w¬°¶}±ÒÀÉ®×ªº¹ï¸Üµøµ¡ 
 	    fd.setVisible(true); 
 	    if(fd!=null)
 	    {   
-	     if(fd.getDirectory()==null){ return;}           //æœ€å¾Œé¡¯ç¤ºæ–¼TextArea 
+	     if(fd.getDirectory()==null){ return;}           //³Ì«áÅã¥Ü©óTextArea 
 	     else{	
-	        Filename=fd.getDirectory() +fd.getFile();   //getDirectoryè¨­å®šæª”æ¡ˆçš„é è¨­è·¯å¾‘, getFileè¨­å®šæª”æ¡ˆçš„é è¨­æª”å
-	        System.out.println("FileDialog---->"+Filename);  //é¡¯ç¤ºé¸æ“‡çš„æª”æ¡ˆè·¯å¾‘+åç¨±
+	        Filename=fd.getDirectory() +fd.getFile();   //getDirectory³]©wÀÉ®×ªº¹w³]¸ô®|, getFile³]©wÀÉ®×ªº¹w³]ÀÉ¦W
+	        System.out.println("FileDialog---->"+Filename);  //Åã¥Ü¿ï¾ÜªºÀÉ®×¸ô®|+¦WºÙ
 	        try 
 	        {
 	            FileReader fr=new FileReader(Filename); 
-	            BufferedReader bread=new BufferedReader(fr); //ä¸²æµç·©è¡
+	            BufferedReader bread=new BufferedReader(fr); //¦ê¬y½w½Ä
 	            int ch;
 	            boolean a = true;
-	            while ((ch=bread.read()) != -1) //BufferedReader ç¹¼æ‰¿è‡ª Reader é¡åˆ¥çš„ read() æ–¹æ³•ä¾†è®€å–, ä½†æ­¤æ–¹æ³•æ˜¯ä¸€æ¬¡è®€å–ä¸€å€‹å­—å…ƒ, è®€åˆ°æª”å°¾æ™‚æœƒå‚³å› -1
+	            while ((ch=bread.read()) != -1) //BufferedReader Ä~©Ó¦Û Reader Ãş§Oªº read() ¤èªk¨ÓÅª¨ú, ¦ı¦¹¤èªk¬O¤@¦¸Åª¨ú¤@­Ó¦r¤¸, Åª¨ìÀÉ§À®É·|¶Ç¦^ -1
 	            {          
-	            	opench=(char)ch;                     //opench=å°‡chå¼·åˆ¶è½‰æˆå­—å…ƒ
+	            	opench=(char)ch;                     //opench=±Nch±j¨îÂà¦¨¦r¤¸
 	            	System.out.print(opench);   
 	            	//if(a==true){a=false;continue;}
-		               str=str+String.valueOf(opench);   //å­—ä¸²=å­—ä¸²+å¼·åˆ¶è½‰å­—ä¸²å¾Œçš„opench
+		               str=str+String.valueOf(opench);   //¦r¦ê=¦r¦ê+±j¨îÂà¦r¦ê«áªºopench
 		              }
-	            textArea.setText("");  //æ¸…é™¤
-	            textArea.setText(str); //æœ€å¾Œé¡¯ç¤ºæ–¼TextArea
+	            textArea.setText("");  //²M°£
+	            textArea.setText(str); //³Ì«áÅã¥Ü©óTextArea
 	            file_name=fd.getFile();
-	            First_load = textArea.getText();	//è¤‡è£½åŸå…ˆå…§å®¹
+	            First_load = textArea.getText();	//½Æ»s­ì¥ı¤º®e
 	             bread.close();
 	             str="";
 	             change_Timer.start();
@@ -644,8 +637,8 @@ public class Final_Work  extends JFrame implements ActionListener
 	        
 	        catch (IOException e) 
 	        {
-	        	JOptionPane.showConfirmDialog(frame, "æ³¨æ„!\né–‹å•Ÿæª”æ¡ˆæ™‚ç™¼ç”ŸéŒ¯èª¤ï¼Œè«‹å†è©¦ä¸€æ¬¡!", "éŒ¯èª¤", JOptionPane.OK_OPTION ,0);
-	        	System.out.println("error_openfile");  //æ•æ‰ç•°å¸¸ä¸¦é¡¯ç¤º"e"
+	        	JOptionPane.showConfirmDialog(frame, "ª`·N!\n¶}±ÒÀÉ®×®Éµo¥Í¿ù»~¡A½Ğ¦A¸Õ¤@¦¸!", "¿ù»~", JOptionPane.OK_OPTION ,0);
+	        	System.out.println("error_openfile");  //®·®»²§±`¨ÃÅã¥Ü"e"
 	    	
 	        }
 	     }
@@ -653,29 +646,29 @@ public class Final_Work  extends JFrame implements ActionListener
 	}
 
 
-	/*filedialogæ–¹æ³•å„²å­˜æª”æ¡ˆ*/
+	/*filedialog¤èªkÀx¦sÀÉ®×*/
 	private static void fgsaveFile() throws IOException  
 	{
 		boolean s = false;
 		String stringfile; 
 		Frame frame = new Frame();
-		FileDialog fd = new FileDialog( frame,"å„²å­˜æª”æ¡ˆ", FileDialog.SAVE);   //LOAD=>æ•´æ•¸ 0 ï¼Œè¨­å®šç‚ºé–‹å•Ÿæª”æ¡ˆçš„å°è©±è¦–çª—
+		FileDialog fd = new FileDialog( frame,"Àx¦sÀÉ®×", FileDialog.SAVE);   //LOAD=>¾ã¼Æ 0 ¡A³]©w¬°¶}±ÒÀÉ®×ªº¹ï¸Üµøµ¡
 	    fd.setVisible(true); 
 	    if(fd!=null)
 	    {   
-	    	 String string1 = textArea.getText();    //æª”æ¡ˆå…§å®¹å­—ä¸²
-	         stringfile = fd.getDirectory()+fd.getFile();//ç•¶æŒ‰è·¯å¾‘+æª”æ¡ˆåç¨±å­—ä¸²
-	         if(fd.getDirectory()==null){s=true;}           //æœ€å¾Œé¡¯ç¤ºæ–¼TextArea 
+	    	 String string1 = textArea.getText();    //ÀÉ®×¤º®e¦r¦ê
+	         stringfile = fd.getDirectory()+fd.getFile();//·í«ö¸ô®|+ÀÉ®×¦WºÙ¦r¦ê
+	         if(fd.getDirectory()==null){s=true;}           //³Ì«áÅã¥Ü©óTextArea 
 	         else  if(!(stringfile.contains(".txt") || stringfile.contains(".TXT")))
 	         {
-	        	 int n= JOptionPane.showConfirmDialog(frame, "æª”æ¡ˆå‰¯æª”åä¼¼ä¹ä¸æ˜¯æ–‡å­—æ–‡ä»¶.txté¡å‹ï¼Œæ˜¯å¦è¨­ç‚ºæ­¤é¡å‹?", "å‰¯æª”åå•é¡Œ", JOptionPane.YES_NO_CANCEL_OPTION ,1);
+	        	 int n= JOptionPane.showConfirmDialog(frame, "ÀÉ®×°ÆÀÉ¦W¦ü¥G¤£¬O¤å¦r¤å¥ó.txtÃş«¬¡A¬O§_³]¬°¦¹Ãş«¬?", "°ÆÀÉ¦W°İÃD", JOptionPane.YES_NO_CANCEL_OPTION ,1);
 	        	 if(n==1)
 	        	 {
 	 	            System.out.println("n=1");  
 	        	 }
 	        	 else if(n==2)
 	        	 {
-		        	 JOptionPane.showConfirmDialog(frame, "æ³¨æ„!\næª”æ¡ˆæœªå„²å­˜!", "å‰¯æª”åå•é¡Œ", JOptionPane.OK_OPTION ,2);
+		        	 JOptionPane.showConfirmDialog(frame, "ª`·N!\nÀÉ®×¥¼Àx¦s!", "°ÆÀÉ¦W°İÃD", JOptionPane.OK_OPTION ,2);
 	        		 System.out.println("n=3");
 	        		 s = true;
 	        	 }
@@ -690,20 +683,20 @@ public class Final_Work  extends JFrame implements ActionListener
 	        {  
 	        	if(s ==false)
 	        	{
-	        		BufferedWriter bwrite = new BufferedWriter(new FileWriter(stringfile));  //ä¸²æµç·©è¡å€
-	        		bwrite.write(string1);   //å¯«å…¥å…§å®¹
-	        		bwrite.close();   //é—œé–‰ä¸²æµ
-	        		textArea.setText(textArea.getText()); //åœ¨å°è©±æ¡†å¾Œæ‰”ä¿æŒæ–‡å­—é¡¯ç¤º
+	        		BufferedWriter bwrite = new BufferedWriter(new FileWriter(stringfile));  //¦ê¬y½w½Ä°Ï
+	        		bwrite.write(string1);   //¼g¤J¤º®e
+	        		bwrite.close();   //Ãö³¬¦ê¬y
+	        		textArea.setText(textArea.getText()); //¦b¹ï¸Ü®Ø«á¥µ«O«ù¤å¦rÅã¥Ü
 	        		file_name=fd.getFile();
-	        		First_load = textArea.getText();	//æ›´æ–°ä¿®æ”¹å‰çš„æª”æ¡ˆ
+	        		First_load = textArea.getText();	//§ó·s­×§ï«eªºÀÉ®×
 	        	}
 	            
 	        } 
 	        catch (Exception e) 
 	        {  
 	            // TODO Auto-generated catch block 
-	        	JOptionPane.showConfirmDialog(frame, "æ³¨æ„!\næª”æ¡ˆå„²å­˜æ™‚ç™¼ç”ŸéŒ¯èª¤ï¼Œè«‹å†è©¦ä¸€æ¬¡!", "éŒ¯èª¤", JOptionPane.OK_OPTION ,0);
-	            System.out.println("ä¿å­˜å¤±æ•—");  
+	        	JOptionPane.showConfirmDialog(frame, "ª`·N!\nÀÉ®×Àx¦s®Éµo¥Í¿ù»~¡A½Ğ¦A¸Õ¤@¦¸!", "¿ù»~", JOptionPane.OK_OPTION ,0);
+	            System.out.println("«O¦s¥¢±Ñ");  
 	        }   
 	    }
 	}
@@ -712,20 +705,20 @@ public class Final_Work  extends JFrame implements ActionListener
 		
 	}
 	private static void copy(){
-		 String copy_string = textArea.getSelectedText();  //å–å¾—textAreaå…§é¸å–çš„å­—ä¸²
-         StringSelec = new StringSelection(copy_string);   //å°‡å…§å®¹ä¸Ÿçµ¦StringSelec
-         cb.setContents(StringSelec,null);//æŠŠå…§å®¹æ”¾åˆ°ç³»çµ±å‰ªè²¼æ¿
+		 String copy_string = textArea.getSelectedText();  //¨ú±otextArea¤º¿ï¨úªº¦r¦ê
+         StringSelec = new StringSelection(copy_string);   //±N¤º®e¥áµ¹StringSelec
+         cb.setContents(StringSelec,null);//§â¤º®e©ñ¨ì¨t²Î°Å¶KªO
 	}
 	private static void paste(){
 		try {
 			String paste_string = null; 
-			Transferable tr = cb.getContents( StringSelec ); //å¾ç³»çµ±å‰ªè²¼æ¿å¾—åˆ°ä¸€å€‹Transferableå°è±¡
+			Transferable tr = cb.getContents( StringSelec ); //±q¨t²Î°Å¶KªO±o¨ì¤@­ÓTransferable¹ï¶H
 			if  (tr != null ){
 			
-			paste_string =(String) tr.getTransferData(DataFlavor.stringFlavor); //å¾Transferableå°åƒä¸­å¾—åˆ°è¤‡è£½çš„æ–‡å­—
+			paste_string =(String) tr.getTransferData(DataFlavor.stringFlavor); //±qTransferable¹ï¹³¤¤±o¨ì½Æ»sªº¤å¦r
 			}
 			if  (paste_string!= null ){
-				textArea.insert((String) paste_string, textArea.getCaretPosition()); //å°‡æ–‡å­—è²¼åœ¨textArea.getCaretPosition()é€™å€‹ä½ç½®
+				textArea.insert((String) paste_string, textArea.getCaretPosition()); //±N¤å¦r¶K¦btextArea.getCaretPosition()³o­Ó¦ì¸m
 
 			}
 			} catch (Exception err){
@@ -735,7 +728,7 @@ public class Final_Work  extends JFrame implements ActionListener
 	private static void del(){
 		
 	}
-    /*é–‹å•Ÿæ–°æª”äº‹ä»¶*/
+    /*¶}±Ò·sÀÉ¨Æ¥ó*/
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
